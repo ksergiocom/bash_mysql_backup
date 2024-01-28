@@ -1,2 +1,3 @@
-# bash_mysql_backup
- Un script de bash para guaradr backups de la base de datos
+# Backup MySQL remoto
+
+Un script de bash para hacer backups a un servidor remoto. También borra los backups anteriores a 30 días.

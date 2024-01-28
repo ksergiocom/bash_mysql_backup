@@ -1,17 +1,16 @@
 #!/bin/bash
 
-# Nombre del archivo
-DB_NAME="khudos"
+DB_NAME="db_name"
 TIMESTAMP=$(date +"%Y%m%d%H%M%S")
 FILENAME="backup_${TIMESTAMP}.sql"
 
-# Ejecuta el comando mysqldump con la configuración proporcionada
+# Dump de base de datos
 mysqldump --defaults-extra-file='mysql.conf' $DB_NAME > backups/"${FILENAME}"
 
-echo "Backup completado correctamente en db.sql"
+echo "Backup completado correctamente en "
 
 
-# Elimina archivos con más de 30 días
+# Eliminar antiguos
 find ./backups -name "backup_*" -type f -mtime +30 -delete;
 
 echo "Archivos antiguos eliminados"
