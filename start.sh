@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-DB_NAME="YOUR_DBNAME"
+DB_NAME="DB_NAME"
 TIMESTAMP=$(date +"%Y%m%d%H%M%S")
 FILENAME="backup_${TIMESTAMP}.sql"
 
@@ -8,19 +9,21 @@ FILENAME="backup_${TIMESTAMP}.sql"
 parentPath="$(dirname "$(realpath "$0")")"
 
 # Crear el directorio de backups si no existe
-if [[ ! -d "${parentPath}/backups" ]]
-then
+if [[ ! -d "${parentPath}/backups" ]]; then
   mkdir -p "${parentPath}/backups"
   echo "Directorio de backups creado en ${parentPath}/backups"
 fi
 
 # Dump de base de datos
-mysqldump --defaults-extra-file="${parentPath}/mysql.conf" $DB_NAME > "${parentPath}/backups/${FILENAME}"
+mysqldump --defaults-extra-file="${parentPath}/mysql.conf" "$DB_NAME" > "${parentPath}/backups/${FILENAME}"
 
-echo "Backup completado correctamente en "
+if [ $? -eq 0 ]; then
+  echo "Backup completado correctamente en ${parentPath}/backups/${FILENAME}"
+else
+  echo "Error haciendo backup" >&2
+  exit 1
+fi
 
-
-# Eliminar antiguos
-find "${parentPath}/backups" -name "backup_*" -type f -mtime +30 -delete;
-
+# Eliminar backups antiguos (más de 30 días)
+find "${parentPath}/backups" -name "backup_*" -type f -mtime +30 -delete
 echo "Archivos antiguos eliminados"
