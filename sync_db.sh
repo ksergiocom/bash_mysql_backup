@@ -8,8 +8,8 @@ REMOTE_CONF="$CURRENT_DIR_PATH/mysql.conf"
 LOCAL_CONF="$CURRENT_DIR_PATH/mysql-local.conf"
 
 # Nombres de las bases de datos
-REMOTE_DB="q2-inertia"
-LOCAL_DB="q2-inertia-dev"
+REMOTE_DB="db_origen_volcado"
+LOCAL_DB="db_destino_volcado"
 
 # Archivo temporal para el dump (con timestamp)
 DUMP_FILE="$CURRENT_DIR_PATH/dump_$(date +%Y%m%d_%H%M%S).sql"
